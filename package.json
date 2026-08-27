@@ -1,5 +1,5 @@
 {
-  "name": "pe-scaffold",
+  "name": "pest-eliminators",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@radix-ui/react-accordion": "^1.2.20",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-dom": "19.2.8"

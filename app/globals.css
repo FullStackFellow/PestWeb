@@ -1,26 +1,279 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ---------------------------------------------------------------------------
+   PEST ELIMINATORS DESIGN TOKENS
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+   Palette direction: ink navy + warm charcoal neutrals + ONE warm ember accent.
+   Chosen deliberately against the category default (green/blue on white) that
+   every researched competitor uses.
+
+   Token strategy: CSS variables only (design skill 8.A). Colors are never
+   written as raw hex in components and there are no `dark:` utilities, the
+   tokens swap and every surface follows.
+
+   DOCUMENTED RADIUS RULE (skill 4.4 shape consistency lock):
+     --radius-pill  -> buttons, badges, chips
+     --radius-card  -> cards, media, panels, accordion items
+     --radius-field -> form inputs and selects
+   Nothing on this site uses a radius outside these three.
+--------------------------------------------------------------------------- */
+
+:root {
+  --bg: #fbfaf8;
+  --surface: #fffdfa;
+  --sunken: #f2efea;
+
+  --ink: #14181f;
+  --ink-2: #454c58;
+  --ink-3: #666d7a;
+
+  --line: #e4dfd7;
+  --line-strong: #d2ccc1;
+
+  --accent: #b8481a;
+  --accent-hover: #9e3d15;
+  --accent-soft: #fbeee6;
+  --on-accent: #fffdfa;
+
+  /* The single deliberate colour block, used for the guarantee band and footer. */
+  --band: #14181f;
+  --band-2: #232935;
+  --on-band: #edeae5;
+  --on-band-2: #a8aeb9;
+  --accent-on-band: #e8703a;
+
+  --shadow-sm: 0 1px 2px rgb(20 24 31 / 0.05);
+  --shadow-card: 0 1px 2px rgb(20 24 31 / 0.04), 0 10px 30px rgb(20 24 31 / 0.07);
+  --shadow-lift: 0 2px 4px rgb(20 24 31 / 0.05), 0 18px 44px rgb(20 24 31 / 0.11);
+
+  --radius-pill: 9999px;
+  --radius-card: 16px;
+  --radius-field: 12px;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: #101318;
+    --surface: #171b22;
+    --sunken: #0b0e12;
+
+    --ink: #edeae5;
+    --ink-2: #b4b9c2;
+    --ink-3: #878d98;
+
+    --line: #272c35;
+    --line-strong: #343b46;
+
+    --accent: #e8703a;
+    --accent-hover: #f2895a;
+    --accent-soft: #22160f;
+    --on-accent: #101318;
+
+    --band: #1b2029;
+    --band-2: #262c37;
+    --on-band: #edeae5;
+    --on-band-2: #a8aeb9;
+    --accent-on-band: #e8703a;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px rgb(0 0 0 / 0.45);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 18px 44px rgb(0 0 0 / 0.55);
   }
 }
 
+:root[data-theme="dark"] {
+  --bg: #101318;
+  --surface: #171b22;
+  --sunken: #0b0e12;
+
+  --ink: #edeae5;
+  --ink-2: #b4b9c2;
+  --ink-3: #878d98;
+
+  --line: #272c35;
+  --line-strong: #343b46;
+
+  --accent: #e8703a;
+  --accent-hover: #f2895a;
+  --accent-soft: #22160f;
+  --on-accent: #101318;
+
+  --band: #1b2029;
+  --band-2: #262c37;
+  --on-band: #edeae5;
+  --on-band-2: #a8aeb9;
+  --accent-on-band: #e8703a;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px rgb(0 0 0 / 0.45);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 18px 44px rgb(0 0 0 / 0.55);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+
+  --color-band: var(--band);
+  --color-band-2: var(--band-2);
+  --color-on-band: var(--on-band);
+  --color-on-band-2: var(--on-band-2);
+  --color-accent-on-band: var(--accent-on-band);
+
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-pill: var(--radius-pill);
+  --radius-card: var(--radius-card);
+  --radius-field: var(--radius-field);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-card: var(--shadow-card);
+  --shadow-lift: var(--shadow-lift);
+
+  --animate-acc-down: acc-down 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-acc-up: acc-up 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Radix accordion panels. Height is animated here because the primitive
+   measures the panel, this is a bounded one-shot transition rather than a
+   continuous scroll effect. */
+@keyframes acc-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes acc-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    color-scheme: dark;
+  }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Theme toggle icon swap, handled in CSS so the button needs no client state
+   and cannot produce a hydration mismatch. */
+.theme-icon-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .theme-icon-dark {
+    display: block;
+  }
+}
+
+:root[data-theme="dark"] .theme-icon-light {
+  display: none;
+}
+:root[data-theme="dark"] .theme-icon-dark {
+  display: block;
+}
+
+:root[data-theme="light"] .theme-icon-light {
+  display: block;
+}
+:root[data-theme="light"] .theme-icon-dark {
+  display: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Scroll reveal. Deliberately additive: the default state is fully visible, and
+   the animation is only attached where the browser supports scroll-driven
+   timelines and the visitor has not requested reduced motion. A browser without
+   support simply shows the content, it never hides it. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry var(--reveal-start, 0%) entry
+        calc(var(--reveal-start, 0%) + 60%);
+    }
+  }
+}
+
+/* Reduced motion: collapse every transition and animation to instant.
+   Required for MOTION_INTENSITY 5 (skill 6.B). Motion components additionally
+   guard with useReducedMotion so entry states never get stuck hidden. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

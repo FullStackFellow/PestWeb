@@ -7,3 +7,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Pest Eliminators
+
+Project conventions, design decisions and the palette/radius/motion rules live
+in `CLAUDE.md`. Read it before changing styling or copy.
+
+Unconfirmed business data (phone, address, license, reviews, photography) is
+tracked in `PLACEHOLDERS.md`. Read that before publishing anything.
